@@ -1,0 +1,41 @@
+#part 1
+def simpleGeneratorFun(count):
+    for i in range(count):
+        if i%2==0:
+            yield i
+for k in simpleGeneratorFun(10):
+    print(k)
+    
+#part 2
+def funcForReadFile(name_fale):
+    arrayWithNameRepo=[]
+    try:
+        file = open(name_fale, 'r')
+    except:
+        print("Sistem error, file not open")
+    with file:
+        lines = file.readlines()
+        for line in lines:
+            arrayWithNameRepo.append(line)
+
+    return arrayWithNameRepo
+
+def copyRepo(gitUrl: str, repoDirectory:str):
+    try:
+Repo.clone_from(gitUrl,repoDirectory)
+    except:
+        print('Error with copy repo')
+
+if __name__ == '__main__':
+    Result=[]
+gits=funcForReadFile("Practical\\Practical4\\data.txt")
+    for git in gits:
+
+        git_Url = git.rstrip()
+        if 'https://github.com' in git_Url:
+            repo_Directory = git.rstrip().split('/')[-1] + '-https'
+        elif 'git@github.com' in git_Url:
+            repo_Directory = git.rstrip().split('/')[-1] + '-ssh'
+        else:
+            print('Error with URL git')
+        copyRepo(git_Url,repo_Directory)
